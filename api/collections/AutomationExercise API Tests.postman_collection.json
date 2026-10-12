@@ -1,0 +1,261 @@
+{
+  "info": {
+    "_postman_id": "77f061b9-09b7-4704-9e8e-fbcf0519e6d3",
+    "name": "AutomationExercise API Tests",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "14695543",
+    "_collection_link": "https://go.postman.co/collection/14695543-77f061b9-09b7-4704-9e8e-fbcf0519e6d3?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "API-01 — Get All Products",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "",
+              "pm.test(\"HTTP status is 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "",
+              "pm.test(\"Product list exists and is not empty\", () => {",
+              "    pm.expect(data.responseCode).to.eql(200);",
+              "    pm.expect(data.products).to.be.an(\"array\").that.is.not.empty;",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/productsList?baseUrl=https://automationexercise.com&searchTerm=tshirt&invalidEmail=wrong-email.example.com&invalidPassword=WrongPassword",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "productsList"
+          ],
+          "query": [
+            {
+              "key": "baseUrl",
+              "value": "https://automationexercise.com"
+            },
+            {
+              "key": "searchTerm",
+              "value": "tshirt"
+            },
+            {
+              "key": "invalidEmail",
+              "value": "wrong-email.example.com"
+            },
+            {
+              "key": "invalidPassword",
+              "value": "WrongPassword"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-02 — Search Products With Valid Keyword",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "",
+              "pm.test(\"HTTP status is 200\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "const term = pm.environment.get(\"searchTerm\").toLowerCase();",
+              "",
+              "pm.test(\"Search returns relevant products\", () => {",
+              "    pm.expect(data.responseCode).to.eql(200);",
+              "    pm.expect(data.products).to.be.an(\"array\").that.is.not.empty;",
+              "",
+              "    pm.expect(",
+              "        data.products.some(product =>",
+              "            product.name.toLowerCase().includes(term)",
+              "        )",
+              "    ).to.eql(true);",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "search_product",
+              "value": "{{searchTerm}}",
+              "type": "text",
+              "uuid": "231a696e-9520-4838-beb3-84168a2f3cca"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/searchProduct",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "searchProduct"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-03 — Search Products Without Keyword",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "",
+              "pm.test(\"HTTP response is successful\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "",
+              "pm.test(\"Missing search keyword returns expected error\", () => {",
+              "    pm.expect(data.responseCode).to.eql(400);",
+              "    pm.expect(data.message).to.eql(",
+              "        \"Bad request, search_product parameter is missing in POST request.\"",
+              "    );",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/searchProduct",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "searchProduct"
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "API-04 — Verify Login With Invalid Credentials",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"HTTP response is successful\", () => {",
+              "    pm.response.to.have.status(200);",
+              "});",
+              "",
+              "const data = pm.response.json();",
+              "",
+              "pm.test(\"Invalid credentials are rejected\", () => {",
+              "    pm.expect(data.responseCode).to.eql(404);",
+              "    pm.expect(data.message).to.eql(\"User not found!\");",
+              "});"
+            ],
+            "type": "text/javascript",
+            "packages": {},
+            "requests": {}
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [],
+        "body": {
+          "mode": "formdata",
+          "formdata": [
+            {
+              "key": "email",
+              "value": "{{invalidEmail}}",
+              "type": "text",
+              "uuid": "68f5424f-53df-4c5a-ac77-f6ab854d309f"
+            },
+            {
+              "key": "password",
+              "value": "{{invalidPassword}}",
+              "type": "text",
+              "uuid": "dee18d87-cbfc-47f6-96ff-78762853b82b"
+            }
+          ]
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/verifyLogin",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "verifyLogin"
+          ]
+        }
+      },
+      "response": []
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "value": ""
+    },
+    {
+      "value": ""
+    }
+  ]
+}
