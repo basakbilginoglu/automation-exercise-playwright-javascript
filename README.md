@@ -6,7 +6,7 @@
 
 ## Overview
 
-This project contains UI test automation for [Automation Exercise](https://automationexercise.com/) using Playwright and TypeScript.
+This project contains UI test automation for [Automation Exercise](https://automationexercise.com/) using Playwright and Javascript.
 
 The goal is to validate important user flows, including product search, cart operations, and login validation.
 
