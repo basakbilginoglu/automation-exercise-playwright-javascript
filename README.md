@@ -20,7 +20,7 @@ The goal is to validate important user flows, including product search, cart ope
 ## Project Structure
 
 ```text
-automation-exercise-playwright/
+automation-exercise-playwright-javascript/
 ├── .github/
 │   └── workflows/
 │       └── playwright.yml
@@ -40,8 +40,8 @@ automation-exercise-playwright/
 Clone the repository:
 
 ```bash
-git clone https://github.com/basakbilginoglu/automation-exercise-playwright.git
-cd automation-exercise-playwright
+git clone https://github.com/basakbilginoglu/automation-exercise-playwright-javascript.git
+cd automation-exercise-playwright-javascript
 ```
 
 ```bash
