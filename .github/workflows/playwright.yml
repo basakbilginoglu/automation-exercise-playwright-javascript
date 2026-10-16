@@ -52,11 +52,13 @@ jobs:
           retention-days: 30
           if-no-files-found: ignore
   
+  d
   deploy-report:
     needs: test
-    if: ${{ always() && needs.test.result != 'cancelled' }}
+    if: ${{ always() && needs.test.result != 'cancelled' && needs.test.result != 'skipped' }}
     runs-on: ubuntu-latest
     permissions:
+      actions: read
       pages: write
       id-token: write
 
@@ -74,9 +76,11 @@ jobs:
       - name: Upload report to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
+          name: playwright-report-pages
           path: playwright-report/
 
       - name: Deploy report
         id: deployment
         uses: actions/deploy-pages@v4
-
+        with:
+          artifact_name: playwright-report-pages
