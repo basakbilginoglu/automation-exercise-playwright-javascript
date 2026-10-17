@@ -115,8 +115,19 @@ Running 9 tests using 1 worker
   9 passed (34.7s)
 ```
 
+### Postman Test Execution Evidence
+
+The Postman collection was executed using Collection Runner.
+
+![Postman test execution results](evidence/postman-run.png)
 
 
+### API Response Validation
 
+Both HTTP status codes and response bodies are validated in Postman tests.
 
+- **Status code validation** checks whether the API returns the expected HTTP result.
+- **Response body validation** checks whether the returned data or error message meets expectations.
+
+Using both helps detect incorrect API behavior and prevents false-positive test results.
 
