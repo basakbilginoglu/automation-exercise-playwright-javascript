@@ -73,14 +73,18 @@ jobs:
           name: playwright-html-report
           path: playwright-report/
 
+    
       - name: Upload report to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          name: playwright-report-pages
+          name: playwright-report-pages-${{ github.run_id }}-${{ github.run_attempt }}
           path: playwright-report/
 
+
+    
       - name: Deploy report
         id: deployment
         uses: actions/deploy-pages@v4
         with:
-          artifact_name: playwright-report-pages
+          artifact_name: playwright-report-pages-${{ github.run_id }}-${{ github.run_attempt }}
+

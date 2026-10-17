@@ -114,6 +114,21 @@ Running 9 tests using 1 worker
 ·········
   9 passed (34.7s)
 ```
+## Locator Improvement and Test Verification
+
+### Product-Specific Locator
+
+I replaced `.first()` with a product-specific locator to make the test more reliable. The `.first()` method always selects the first product row, which may not be the product we want to verify. If the order of products changes, the test could check the wrong product. By using the product name, the test finds the correct row and verifies its title and price.
+
+### Cart Quantity Assertion
+
+I added a quantity assertion to verify that the product was added to the cart with a quantity of one.
+
+### Evidence
+
+- **Code diff:** [Link to locator improvement commit](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/commit/02825fa14a62ace4e56cb5481bf48426b205a534)
+- **Quantity assertion diff:** [Link to quantity assertion commit](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/commit/e95a55bedfee806e701c483742ea8bb957bfcd74)
+
 
 ### Postman Test Execution Evidence
 
