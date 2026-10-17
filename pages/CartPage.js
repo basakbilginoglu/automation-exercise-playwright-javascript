@@ -43,4 +43,12 @@ export class CartPage extends BasePage {
         const price = await row.locator('.cart_price').textContent();
         return price?.trim() ?? '';
     }
+
+    async getProductQuantity(productName) {
+    const row = this.getProductRow(productName);
+    await expect(row).toHaveCount(1);
+
+    const quantity = await row.locator('.cart_quantity button').textContent();
+    return Number(quantity?.trim());
+}
 }

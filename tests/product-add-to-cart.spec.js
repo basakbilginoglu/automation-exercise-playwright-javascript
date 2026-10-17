@@ -23,5 +23,9 @@ test.describe('Product Add to Cart', () => {
 
     await expect.poll(() => cartPage.getProductPrice(CartData.product.name))
       .toBe(CartData.product.price);
+    
+    await expect(cartPage.getProductRow(CartData.product.name)
+        .locator('.cart_quantity button')
+    ).toHaveText('1'); 
   });
 });
