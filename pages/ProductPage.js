@@ -1,13 +1,13 @@
-import {Page,Locator} from '@playwright/test';
+import { test, expect } from '@playwright/test';
 import { BasePage } from './BasePage';
+import CartData from '../test-data/cart.json';
 
 export class ProductPage extends BasePage {
     constructor(page) {
         super(page);
         this.searchInput = page.locator('#search_product');
+
         this.searchButton = page.locator('#submit_search');
-        this.firstProductOverlay = page.locator('.product-image-wrapper');
-        this.addToCartButton = page.locator('.add-to-cart');
         this.continueShoppingButton = page.getByRole('button', { name: 'Continue Shopping' });
 
     }
@@ -16,13 +16,18 @@ export class ProductPage extends BasePage {
         await this.searchButton.click();
 
     }
-    
-    async addFirstProductToCart() {
-        await this.firstProductOverlay.first().hover();
-        await this.addToCartButton.first().click();
-       
+     
+     async addProductToCart(productName) {
+        const product = this.page.locator('.productinfo')
+            .filter({ hasText: productName });
+
+        await expect(product).toHaveCount(1);
+        await product.hover();
+        await product.locator('.add-to-cart').click();
     }
-    async clickContinueShopping(){
-        await this.continueShoppingButton.click();
-    }
+
+
+     async clickContinueShopping(){
+            await this.continueShoppingButton.click();
+     }
 }    
