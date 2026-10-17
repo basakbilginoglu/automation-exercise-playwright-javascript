@@ -119,7 +119,7 @@ Running 9 tests using 1 worker
 
 The Postman collection was executed using Collection Runner.
 
-![Postman test execution results](evidence/postman-run.png)
+![Postman test execution results](api/evidence/postman-run.png)
 
 
 ### API Response Validation
