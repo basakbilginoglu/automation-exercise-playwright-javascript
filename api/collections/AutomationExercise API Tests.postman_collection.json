@@ -13,22 +13,10 @@
         {
           "listen": "test",
           "script": {
-            "exec": [
-              "",
-              "pm.test(\"HTTP status is 200\", () => {",
-              "    pm.response.to.have.status(200);",
-              "});",
-              "",
-              "const data = pm.response.json();",
-              "",
-              "pm.test(\"Product list exists and is not empty\", () => {",
-              "    pm.expect(data.responseCode).to.eql(200);",
-              "    pm.expect(data.products).to.be.an(\"array\").that.is.not.empty;",
-              "});"
-            ],
             "type": "text/javascript",
-            "packages": {},
-            "requests": {}
+            "exec": [
+              "\npm.test(\"HTTP status is 200\", () => {\n    pm.response.to.have.status(200);\n});\n\nconst data = pm.response.json();\n\npm.test(\"Product list exists and is not empty\", () => {\n    pm.expect(data.responseCode).to.eql(200);\n    pm.expect(data.products).to.be.an(\"array\").that.is.not.empty;\n});"
+            ]
           }
         }
       ],
@@ -36,31 +24,13 @@
         "method": "GET",
         "header": [],
         "url": {
-          "raw": "{{baseUrl}}/api/productsList?baseUrl=https://automationexercise.com&searchTerm=tshirt&invalidEmail=wrong-email.example.com&invalidPassword=WrongPassword",
+          "raw": "{{baseUrl}}/api/productsList",
           "host": [
             "{{baseUrl}}"
           ],
           "path": [
             "api",
             "productsList"
-          ],
-          "query": [
-            {
-              "key": "baseUrl",
-              "value": "https://automationexercise.com"
-            },
-            {
-              "key": "searchTerm",
-              "value": "tshirt"
-            },
-            {
-              "key": "invalidEmail",
-              "value": "wrong-email.example.com"
-            },
-            {
-              "key": "invalidPassword",
-              "value": "WrongPassword"
-            }
           ]
         }
       },
