@@ -18,10 +18,10 @@ test.describe('Product Add to Cart', () => {
 
     await headerPage.clickCartLink();
 
-    await expect.poll(() => cartPage.getFirstProductTitle())
+    await expect.poll(() => cartPage.getProductTitle(CartData.product.name))
       .toBe(CartData.product.name);
 
-    await expect.poll(() => cartPage.getFirstProductPrice())
+    await expect.poll(() => cartPage.getProductPrice(CartData.product.name))
       .toBe(CartData.product.price);
   });
 });

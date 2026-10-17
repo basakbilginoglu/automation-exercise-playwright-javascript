@@ -1,36 +1,46 @@
-import {Page,Locator} from '@playwright/test';
+
+import { expect } from '@playwright/test';
 import { BasePage } from './BasePage';
 
 export class CartPage extends BasePage {
-
     constructor(page) {
         super(page);
+
         this.cartRows = page.locator('.cart_info tbody tr');
-        this.proceedToCheckoutButton = page.locator('.cart_navigation a:has-text("Proceed To Checkout")');
+        this.proceedToCheckoutButton = page.getByRole('link', {
+            name: 'Proceed To Checkout'
+        });
     }
 
-    async getCartItemsCount(){
+    async getCartItemsCount() {
         return await this.cartRows.count();
     }
 
-    async clickProceedToCheckout(){
+    async clickProceedToCheckout() {
         await this.proceedToCheckoutButton.click();
     }
-    async getFirstProductTitle(){
-       if (await this.getCartItemsCount() > 0) {
-        const title = await this.cartRows.first().locator('.cart_description h4 a').textContent();
-        return title ? title.trim() : '';
-       }
-      return '';
+
+    getProductRow(productName) {
+        return this.cartRows.filter({
+            has: this.page.locator('.cart_description h4 a', {
+                hasText: productName
+            })
+        });
     }
 
-    async getFirstProductPrice() {
-        const price = await this.cartRows.first()
-            .locator('.cart_price')
-            .textContent();
+    async getProductTitle(productName) {
+        const row = this.getProductRow(productName);
+        await expect(row).toHaveCount(1);
 
+        const title = await row.locator('.cart_description h4 a').textContent();
+        return title?.trim() ?? '';
+    }
+
+    async getProductPrice(productName) {
+        const row = this.getProductRow(productName);
+        await expect(row).toHaveCount(1);
+
+        const price = await row.locator('.cart_price').textContent();
         return price?.trim() ?? '';
+    }
 }
-
-
-}   
