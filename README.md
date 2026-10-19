@@ -163,31 +163,29 @@ npm run test:report
 
 This project uses GitHub Actions to execute Playwright tests in a CI environment.
 
-The workflow is configured to run on pushes and pull requests targeting the configured branches. It also supports manual execution through `workflow_dispatch`.
+The workflow runs on pushes and pull requests targeting the configured `main` and `master` branches. It also supports manual execution through `workflow_dispatch`.
+
+## CI Integration and Evidence
+
+This project uses GitHub Actions to execute Playwright tests in a CI environment.
+
+The workflow runs on pushes and pull requests targeting the configured `main` and `master` branches. It also supports manual execution through `workflow_dispatch`.
 
 ### Run Tests in CI
 
 1. Open the [GitHub Actions workflow](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/workflows/playwright.yml).
 2. Select **Run workflow**.
 3. Choose the `main` branch and start the workflow.
-4. Open the workflow run to review the execution logs and results.
+4. Open a workflow run to review the execution logs and results.
 
 ### Successful Run Evidence
 
-A previously recorded successful run completed with nine passing tests in 34.7 seconds.
+The following links refer to two separate CI executions:
 
-- **Workflow:** [Playwright Tests – GitHub Actions](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/workflows/playwright.yml)
-- **Successful run:** [View test execution](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/runs/38300173433/job/114980900073)
+- **Run 1:** [View test execution](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/runs/39026604179)
+- **Run 2:** [View test execution](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/runs/39027676553)
 
-Reported output:
-
-```text
-Running 9 tests using 1 worker
-·········
-9 passed (34.7s)
-```
-
-This result documents a previous successful run; subsequent runs may produce different results.
+Review each run's status, tested commit, browser configuration, and available diagnostic artifacts.
 
 ## Locator Improvement and Test Verification
 
@@ -204,6 +202,7 @@ The `.first()` method selects the first matching element, which may not correspo
 I added a quantity assertion to verify that the product was added to the cart with a quantity of one.
 
 **Code diff:** [View quantity assertion commit](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/commit/e95a55bedfee806e701c483742ea8bb957bfcd74)
+
 **Screenshot:** (https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/runs/39027676553/job/117381768276)
 
 ## Postman API Testing Evidence
