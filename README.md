@@ -171,21 +171,37 @@ This project uses GitHub Actions to execute Playwright tests in a CI environment
 
 The workflow runs on pushes and pull requests targeting the configured `main` and `master` branches. It also supports manual execution through `workflow_dispatch`.
 
-### Run Tests in CI
+## CI Execution and Failure Analysis
 
-1. Open the [GitHub Actions workflow](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/workflows/playwright.yml).
-2. Select **Run workflow**.
-3. Choose the `main` branch and start the workflow.
-4. Open a workflow run to review the execution logs and results.
+### 1. Consecutive Successful CI Runs
 
-### Successful Run Evidence
+GitHub Actions runs the Playwright test suite automatically on pushes and pull requests to the configured branches.
 
-The following links refer to two separate CI executions:
+Two successful runs were recorded after the assertion fix to verify the test results across consecutive executions.
 
-- **Run 1:** [View test execution](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/runs/39026604179)
-- **Run 2:** [View test execution](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/runs/39027676553)
+- **Successful Run 1:** [View GitHub Actions Run](PASTE_SUCCESSFUL_RUN_1_URL)
+- **Successful Run 2:** [View GitHub Actions Run](PASTE_SUCCESSFUL_RUN_2_URL)
 
-Review each run's status, tested commit, browser configuration, and available diagnostic artifacts.
+### 2. Controlled Failure and Trace Analysis
+
+A controlled failure was introduced by temporarily changing the expected value of the price assertion in the cart test.
+
+The test failed as expected. The Playwright trace was reviewed to inspect the failed assertion and compare the expected and actual values.
+
+- **Failure Commit:** [View Commit](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/commit/40fa33a1e5245c4cfbd013f8e2a33f9a8971648f)
+- **Failed CI Run:** [View Failed Run](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/runs/39233968607)
+- **Trace / Screenshot Evidence:** [View Diagnostic Artifact](PASTE_ARTIFACT_URL)
+
+**Root Cause:** The assertion was intentionally configured with an incorrect expected value to simulate a test failure. This was a controlled test failure, not a confirmed application defect.
+
+### 3. Assertion Fix and Code Diff
+
+The incorrect expected value was replaced with the expected price stored in the JSON test data. The test was then rerun to verify the correction.
+
+- **Fix Commit:** [View Fix Commit](PASTE_FIX_COMMIT_URL)
+- **Assertion Diff:** [View Code Changes](PASTE_FIX_DIFF_URL)
+
+The diff shows the assertion change made during the investigation. The successful CI runs provide evidence that the corrected test suite passed after the fix.
 
 ## Locator Improvement and Test Verification
 

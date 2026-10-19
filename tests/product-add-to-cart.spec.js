@@ -22,8 +22,8 @@ test.describe('Product Add to Cart', () => {
       .toBe(CartData.product.name);
 
     await expect.poll(() => cartPage.getProductPrice(CartData.product.name))
-      .toBe("Rs. 999");
-    
+      .toBe(CartData.product.price);
+
     await expect(cartPage.getProductRow(CartData.product.name)
         .locator('.cart_quantity button')
     ).toHaveText('1'); 
