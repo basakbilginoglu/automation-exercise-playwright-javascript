@@ -16,6 +16,9 @@ The goal is to validate important user flows, including product search, cart ope
 
 ## Project Structure
 
+## Project Structure
+
+```text
 automation-exercise-playwright-javascript/
 ├── .github/
 │   └── workflows/
@@ -39,6 +42,7 @@ automation-exercise-playwright-javascript/
 ├── package-lock.json
 ├── .gitignore
 └── README.md
+```
 
 ## Prerequisites
 
