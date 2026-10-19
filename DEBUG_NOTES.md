@@ -9,7 +9,7 @@ The test failed as expected. The failure was investigated by reviewing the CI lo
 
 **Screenshot evidence:**
 
-![Controlled Failure Screenshot](evidence/controlled-failure.png)
+![Controlled Failure Screenshot](evidence/test-failed-1.png)
 
 **Root Cause:** The failure was intentionally introduced by using an incorrect expected value in the assertion. This was a controlled test failure, not a confirmed application defect.
 
