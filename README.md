@@ -16,7 +16,6 @@ The goal is to validate important user flows, including product search, cart ope
 
 ## Project Structure
 
-```text
 automation-exercise-playwright-javascript/
 ├── .github/
 │   └── workflows/
@@ -29,18 +28,17 @@ automation-exercise-playwright-javascript/
 │   └── evidence/
 │       └── postman-run.png
 ├── evidence/
-│   └── controlled-failure.png
+│   └── test-failed-1.png
 ├── pages/
 ├── tests/
 ├── test-data/
+├── DEBUG_NOTES.md
+├── TECHNICAL_DECISION.md
 ├── playwright.config.js
 ├── package.json
 ├── package-lock.json
 ├── .gitignore
 └── README.md
-```
-
-*Note: This structure shows the main project files and directories. Adjust it to match the actual repository.*
 
 ## Prerequisites
 
