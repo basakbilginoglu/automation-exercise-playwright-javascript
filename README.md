@@ -106,8 +106,6 @@ npx playwright test --ui
 
 ### Run Tests in a Specific Browser
 
-If the corresponding projects are configured in `playwright.config.js`:
-
 ```bash
 npx playwright test --project=chromium
 npx playwright test --project=firefox
