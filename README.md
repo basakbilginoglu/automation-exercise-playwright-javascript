@@ -1,20 +1,17 @@
-
-
-
-
 # Automation Exercise – Playwright Tests
 
 ## Overview
 
-This project contains UI test automation for [Automation Exercise](https://automationexercise.com/) using Playwright and Javascript.
+This project contains UI test automation for [Automation Exercise](https://automationexercise.com/) using Playwright and JavaScript.
 
-The goal is to validate important user flows, including product search, cart operations, and login validation.
+The goal is to validate important user flows, including product search, cart operations, and login validation. The repository also includes API testing artifacts created with Postman.
 
 ## Tech Stack
 
 - Playwright
-- Javascript
-- Node.js
+- JavaScript
+- Node.js and npm
+- Postman
 - GitHub Actions
 
 ## Project Structure
@@ -25,24 +22,65 @@ automation-exercise-playwright-javascript/
 │   └── workflows/
 │       └── playwright.yml
 ├── api/
+│   ├── collections/
+│   │   └── collection.json
+│   ├── environments/
+│   │   └── environment.json
+│   └── evidence/
+│       └── postman-run.png
 ├── pages/
 ├── tests/
 ├── test-data/
-├── playwright.config.ts
+├── playwright.config.js
 ├── package.json
 ├── package-lock.json
 ├── .gitignore
 └── README.md
 ```
 
+
+
+*Note: The structure above shows the main project files and directories. The actual contents may vary.*
+
+## Prerequisites
+
+Make sure the following tools are installed:
+
+- [Node.js](https://nodejs.org/) (LTS version recommended)
+- [Git](https://git-scm.com/)
+
 ## Installation
 
-Clone the repository:
+### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/basakbilginoglu/automation-exercise-playwright-javascript.git
 cd automation-exercise-playwright-javascript
 ```
+
+### 2. Install Dependencies
+
+Choose one of the following options.
+
+**Option A: Install dependencies**
+
+```bash
+npm install
+```
+
+**Option B: Clean, reproducible installation**
+
+```bash
+npm ci
+```
+
+`npm ci` requires the committed `package-lock.json` file and installs dependencies according to the lockfile. It is recommended for CI environments and clean installations.
+
+Use either `npm install` or `npm ci`; running both is not necessary.
+
+### 3. Install Playwright Browsers
+
+Install the browsers required for local test execution:
 
 ```bash
 npx playwright install
@@ -50,13 +88,27 @@ npx playwright install
 
 ## Running Tests
 
-Run all tests:
+### Run All Tests
 
 ```bash
-npx playwright test
+npm test
 ```
 
-Run tests in a specific browser:
+### Run Tests with a Visible Browser
+
+```bash
+npm run test:headed
+```
+
+### Run Tests in Playwright UI Mode
+
+```bash
+npm run test:ui
+```
+
+### Run Tests in a Specific Browser
+
+If the corresponding projects are configured in `playwright.config.js`:
 
 ```bash
 npx playwright test --project=chromium
@@ -64,10 +116,20 @@ npx playwright test --project=firefox
 npx playwright test --project=webkit
 ```
 
-Open the HTML report:
+### Run a Specific Test File
+
+Replace the example path with the actual test file path:
 
 ```bash
-npx playwright show-report
+npx playwright test tests/product-search.spec.js
+```
+
+### View the HTML Report
+
+After running the tests:
+
+```bash
+npm run test:report
 ```
 
 ## Test Scope
@@ -75,12 +137,13 @@ npx playwright show-report
 ### 1. Product Search
 
 - Search for a product using the search field.
-- Check that the results contain relevant product information.
+- Verify that the search results contain relevant product information.
 
 ### 2. Cart
 
 - Add a product to the cart.
 - Verify the product name and price in the cart.
+- Verify that the product quantity is one.
 
 ### 3. Negative Login
 
@@ -90,59 +153,73 @@ npx playwright show-report
 ## Design Decisions
 
 - **Page Object Model (POM):** Page-specific interactions are organized into page classes to improve maintainability and reusability.
-- **Business-critical assertions:** The cart test checks the product name and price, which are important details in the shopping flow.
+- **Business-critical assertions:** The cart test checks the product name, price, and quantity.
 - **Negative testing:** The login test verifies the application's response to invalid credentials.
-- **Cross-browser configuration:** Playwright is configured for Chromium, Firefox, and WebKit.
-- **CI integration:** GitHub Actions runs the test suite automatically on pushes and supports manual execution.
+- **Cross-browser configuration:** Playwright is configured to support Chromium, Firefox, and WebKit.
 - **Separation of concerns:** Tests, page objects, test data, and API-related files are organized separately.
+- **CI integration:** GitHub Actions runs the test suite automatically according to the configured workflow triggers and supports manual execution.
 
-## CI Evidence
+## CI Integration and Evidence
 
-GitHub Actions is configured to run the Playwright test suite automatically on every push and can also be triggered manually using `workflow_dispatch`.
+This project uses GitHub Actions to execute Playwright tests in a CI environment.
 
-**Latest recorded successful run:** 9 tests passed in 34.7 seconds.
+The workflow is configured to run on pushes and pull requests targeting the configured branches. It also supports manual execution through `workflow_dispatch`.
 
-**Workflow:** [Playwright Tests – GitHub Actions](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/workflows/playwright.yml)
+### Run Tests in CI
 
-**Successful run:** https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/runs/38300173433/job/114980900073
+1. Open the [GitHub Actions workflow](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/workflows/playwright.yml).
+2. Select **Run workflow**.
+3. Choose the `main` branch and start the workflow.
+4. Open the workflow run to review the execution logs and results.
 
-The successful run log reported:
+### Successful Run Evidence
+
+A previously recorded successful run completed with nine passing tests in 34.7 seconds.
+
+- **Workflow:** [Playwright Tests – GitHub Actions](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/workflows/playwright.yml)
+- **Successful run:** [View test execution](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/runs/38300173433/job/114980900073)
+
+Reported output:
 
 ```text
-
 Running 9 tests using 1 worker
 ·········
-  9 passed (34.7s)
+9 passed (34.7s)
 ```
+
+This result documents a previous successful run; subsequent runs may produce different results.
+
 ## Locator Improvement and Test Verification
 
 ### Product-Specific Locator
 
-I replaced `.first()` with a product-specific locator to make the test more reliable. The `.first()` method always selects the first product row, which may not be the product we want to verify. If the order of products changes, the test could check the wrong product. By using the product name, the test finds the correct row and verifies its title and price.
+I replaced `.first()` with a product-specific locator to make the test more reliable.
+
+The `.first()` method selects the first matching element, which may not correspond to the intended product. If the product order changes, the test could verify the wrong item. Locating the intended product by name helps ensure that its title and price are checked.
+
+**Code diff:** [View locator improvement commit](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/commit/02825fa14a62ace4e56cb5481bf48426b205a534)
 
 ### Cart Quantity Assertion
 
 I added a quantity assertion to verify that the product was added to the cart with a quantity of one.
 
-### Evidence
+**Code diff:** [View quantity assertion commit](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/commit/e95a55bedfee806e701c483742ea8bb957bfcd74)
+**Screenshot:** (https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/actions/runs/39027676553/job/117381768276)
 
-- **Code diff:** [Link to locator improvement commit](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/commit/02825fa14a62ace4e56cb5481bf48426b205a534)
-- **Quantity assertion diff:** [Link to quantity assertion commit](https://github.com/basakbilginoglu/automation-exercise-playwright-javascript/commit/e95a55bedfee806e701c483742ea8bb957bfcd74)
-
-
-### Postman Test Execution Evidence
+## Postman API Testing Evidence
 
 The Postman collection was executed using Collection Runner.
 
 ![Postman test execution results](api/evidence/postman-run.png)
 
-
 ### API Response Validation
 
 Both HTTP status codes and response bodies are validated in Postman tests.
 
-- **Status code validation** checks whether the API returns the expected HTTP result.
-- **Response body validation** checks whether the returned data or error message meets expectations.
+- **Status code validation:** Checks whether the API returns the expected HTTP status.
+- **Response body validation:** Checks whether the returned data or error message meets expectations.
 
-Using both helps detect incorrect API behavior and prevents false-positive test results.
+Using both validations helps detect incorrect API behavior and reduces the risk of false-positive test results.
+
+
 
