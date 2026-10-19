@@ -155,7 +155,7 @@ npx playwright show-report
 - **Separation of concerns:** Tests, page objects, test data, and API-related files are organized separately.
 - **CI integration:** GitHub Actions runs the test suite according to the configured workflow triggers and supports manual execution.
 
-## CI Integration and Failure Analysis
+## CI Integration 
 
 GitHub Actions executes the Playwright test suite in a CI environment. The workflow runs on pushes and pull requests targeting the configured `main` and `master` branches and supports manual execution through `workflow_dispatch`.
 
