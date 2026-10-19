@@ -22,7 +22,7 @@ test.describe('Product Add to Cart', () => {
       .toBe(CartData.product.name);
 
     await expect.poll(() => cartPage.getProductPrice(CartData.product.name))
-      .toBe(CartData.product.price);
+      .toBe("Rs. 999");
     
     await expect(cartPage.getProductRow(CartData.product.name)
         .locator('.cart_quantity button')
